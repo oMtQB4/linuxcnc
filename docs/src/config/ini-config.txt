@@ -376,20 +376,28 @@ See <<cha:gmoccapy,gmoccapy>> document for Gmoccapy details.
 
 * 'FOAM = 1' - Any non-empty value (including "0") causes axis to change the display for foam-cutter mode.
 
-* 'GEOMETRY = XYZABCUVW' - Controls the preview and backplot of rotary motion. This item consists
-    of a sequence of axis letters, optionally preceded by a "-" sign.
+* 'GEOMETRY = XYZABCUVW' - Controls the preview and backplot of rotary motion.
+    This item consists of a sequence of axis letters, optionally preceded by a "-" sign.
     This sequence specifies the order in which the effect
     of each axis is applied, with a "-" inverting the sense of the
     rotation.
-     The proper GEOMETRY string depends on the machine configuration and
+
+    If the '!' character appears anywhere in the sequence, then rotations
+    for the A,B,C axis letters respect offsets applied (G5x, G92).
+
+    The proper GEOMETRY string depends on the machine configuration and
     the kinematics used to control it. The example string GEOMETRY=XYZBCUVW
     is for a 5-axis machine where kinematics causes UVW to move in the
     coordinate system of the tool and XYZ to move in the coordinate system
     of the material. The order of the letters is important, because it
     expresses the order in which the different transformations are applied.
     For example rotating around C then B is different than rotating around
-    B then C. Geometry has no effect without a rotary axis.
-     Foam-cutting machines (FOAM = 1) should specify "XY;UV" or leave the value
+    B then C. 
+
+[NOTE]
+Geometry settings for A,B,C have no effect without a rotary axis (A,B,C).
+
+    Foam-cutting machines (FOAM = 1) should specify "XY;UV" or leave the value
     blank even though this value is presently ignored in foam-cutter mode.  A
     future version may define what ";" means, but if it does "XY;UV" will mean
     the same as the current foam default.

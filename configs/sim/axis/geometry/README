@@ -1,0 +1,10 @@
+xzc.ini
+
+[DISPLAY]GEOMETRY=!CXZ
+
+'!' specifes rotations repect
+G5x,G92 offsets
+
+[DISPLAY]OPEN_FILE=xzc.ngc 
+demonstrates C rotations with and
+without G5x and G92 offsets

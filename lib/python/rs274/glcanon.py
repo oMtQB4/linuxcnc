@@ -461,6 +461,8 @@ class GlCanonDraw:
 
     def init_glcanondraw(self,trajcoordinates="XYZABCUVW",kinsmodule="trivkins",msg=""):
         self.trajcoordinates = trajcoordinates.upper().replace(" ","")
+        # '!' char specifies respect_offsets for rotations
+        linuxcnc.gui_coords(self.trajcoordinates,int('!' in self.get_geometry()))
         self.kinsmodule = kinsmodule
         self.no_joint_display = self.stat.kinematics_type == linuxcnc.KINEMATICS_IDENTITY
         if (msg != ""):
@@ -1099,6 +1101,9 @@ class GlCanonDraw:
     def redraw(self):
         s = self.stat
         s.poll()
+        linuxcnc.gui_rot_offsets(s.g5x_offset[0] + s.g92_offset[0],
+                                 s.g5x_offset[1] + s.g92_offset[1],
+                                 s.g5x_offset[2] + s.g92_offset[2])
 
         machine_limit_min, machine_limit_max = self.soft_limits()
 

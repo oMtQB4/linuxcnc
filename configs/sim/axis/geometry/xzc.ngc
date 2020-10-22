@@ -1,0 +1,59 @@
+o<100> sub
+       f100
+       g61
+       g0 x1 c0
+       g1 x2 c45
+       g1 x1 
+       f3600
+       g1    c0
+       g0x0c0z0
+o<100> endsub
+;#########################################################
+
+o<200> if [#5210 ne 0]
+         (debug, ! Prog loaded with g92 offsets)
+         (debug, RELOAD program required)
+         g92.1
+         (debug, bye)
+         m2
+o<200> endif
+
+o<210> if [[#5221 ne 0] or [#5222 ne 0] or [#5223 ne 0] or [#5223 ne 0] or [#5225 ne 0] or [#5226 ne 0] or [#5227 ne 0] or [#5228 ne 0] or [#5229 ne 0] ]
+         (debug, ! Prog loaded with g5x offsets)
+         (debug, RELOAD program required)
+         g92.1
+         g10l2p0x0z0c0
+         (debug, bye)
+         m2
+o<210> endif
+
+g10l2p0x0
+g92.1
+
+g0x0c0z0
+g10l2p0x0
+(debug, Next: run with NO offsets)
+(debug, s to continue)
+m0
+o<100> call
+
+o<300> if [#<_task> eq 1]
+          (debug, 1t=#<_task>)
+          g10l2p0x1
+          (debug, Next: run with g5x xoffset=#5221)
+          (debug, s to continue)
+          m0
+          o<100> call
+
+          g10l2p0x0
+          g92x2
+          (debug, Next: run with g92 xoffset=#5211)
+          (debug, s to continue)
+          m0
+          o<100> call
+o<300> endif
+
+g10l2p0x0
+g92.1
+(debug,fini)
+m2
